@@ -54,6 +54,9 @@ let diagnosticCollection = languages.createDiagnosticCollection('fecs');
 let extContext = null;
 let statusBarItem = null;
 
+let rateStatusBarItem = window.createStatusBarItem(2);
+rateStatusBarItem.show();
+
 let warningPointImagePath = '';
 let errorPointImagePath = '';
 
@@ -222,6 +225,12 @@ function runFecs(editor, needDelay) {
         prepareErrors(errors, editor);
         renderErrors(editor);
         editorFecsData.isRunning = false;
+        if (errors.length) {
+            rateStatusBarItem.text = 'rate: ' + (errors.length / document.lineCount * 100).toFixed(2) + '%';
+        }
+        else {
+            rateStatusBarItem.text = 'yooooo~';
+        }
     });
 }
 
